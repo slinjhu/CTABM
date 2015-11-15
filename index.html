@@ -2,43 +2,33 @@
 <head>
     <title>Head</title>
     <script src="lib/paper-full.min.js"></script>
+    <script src="lib/jquery-1.11.3.min.js"></script>
+    <script src="lib/d3-3.5.6.min.js"></script>
+    <script src="lib/Chart.min.js"></script>
+
     <script type="text/javascript" src="js/path.js"></script>
-    <style type="text/css">
-        #myCanvas{
-            width: 800px;
-            height: 600px;
-            padding: 20px;
-        }
-        #slider{
-            width: 500px;
-        }
-    </style>
+    <script type="text/javascript" src="js/chart.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
 
 </head>
 
 <body>
 
-<canvas id="myCanvas"></canvas>
-
+<canvas id="graph"></canvas>
+<canvas id="chart"></canvas>
 
 <div id="control">
-    <input id="slider" type="range" min =1 max=100 value=50 onchange="update(this.value)">
+    <table id="legend"></table>
+    <hr>
+    Sponsor's preference of adaptive clinical trials<br>
+    <input id="probAdaptive" type="range" class="slider" min =1 max=100 value=15>
 </div>
+
 
 
 </body>
 
 <script type="text/javascript">
-    function update(percent){
 
-        var start = mypoints.points["F"];
-        var end = mypoints.points["C"];
-        var movx = (percent /100) * (end.x - start.x);
-        var movy = (percent /100) * (end.y - start.y);
-        var loc = start.add([movx, movy]);
-
-        symbol.position = loc;
-        paper.view.draw();
-    }
 
 </script>
