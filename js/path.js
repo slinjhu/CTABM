@@ -10,7 +10,7 @@ var Vertex = function(x, y, adj){
 
 Vertex.prototype = {
     makePoint: function(x, y){
-        x = 120 * (1+x);
+        x = 110 * (0.2+x);
         y = 100 * y;
         return new paper.Point(x, y);
     },
@@ -129,14 +129,14 @@ Particles.prototype = {
                         return "ST";
                     }
                 case "ST":
-                    var probAccept = 20;
+                    var probAccept = 10;
                     if(Math.random()*100 < probAccept){
                         return "As";
                     }else{
                         return "Ns";
                     }
                 case "AD":
-                    var probAccept = 20;
+                    var probAccept = document.getElementById("probAcceptAtAdaptive").value;
                     if(Math.random()*100 < probAccept){
                         return "Aa";
                     }else{
