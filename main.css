@@ -1,25 +1,10 @@
-#graph{
-    width: 600px;
-    height: 600px;
-    padding: 20px;
+.panel{
+    margin: 20px;
     float: left;
 }
-#chart{
-    float: left;
-    margin: 15px;
-}
-#chart div {
-    font: 13px sans-serif;
-    background-color: steelblue;
-    text-align: left;
-    padding: 3px;
-    margin: 1px;
-    color: white;
-}
-#control{
-    padding: 20px;
-    float: left;
-}
+
+
 .slider{
     width: 300px;
 }
+

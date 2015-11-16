@@ -1,5 +1,3 @@
-var symbol;
-var mypoints;
 
 var Vertex = function(x, y, adj){
     this.x = x;
@@ -11,7 +9,7 @@ var Vertex = function(x, y, adj){
 Vertex.prototype = {
     makePoint: function(x, y){
         x = 110 * (0.2+x);
-        y = 100 * y;
+        y = 100 * (y-0.5);
         return new paper.Point(x, y);
     },
     makeText: function(text){
@@ -87,13 +85,14 @@ var Particles = function(graph){
     this.origin = graph.vertices["P"].point;
     this.instances = new Array();
     this.counter = {
-        As: {id: "As", label: "Accepted, standard", value: 0, color: "DarkGreen"},
-        Ns: {id: "Ns", label: "Not accepted, standard", value: 0, color: "FireBrick"},
-        Aa: {id: "Aa", label: "Accepted, adaptive", value: 0, color: "LimeGreen"},
-        Na: {id: "Na", label: "Not accepted, adaptive", value: 0, color: "Magenta"}
+        As: {label: "As", desc: "Accepted, standard", value: 0, color: "DarkGreen"},
+        Ns: {label: "Ns", desc: "Not accepted, standard", value: 0, color: "FireBrick"},
+        Aa: {label: "Aa", desc: "Accepted, adaptive", value: 0, color: "LimeGreen"},
+        Na: {label: "Na", desc: "Not accepted, adaptive", value: 0, color: "Magenta", startAngle: 0}
     };
-    make_legend(this.counter)
+    make_legend(this.counter);
     update_chart(this.counter);
+
 };
 
 
@@ -196,15 +195,13 @@ window.onload = function(){
     var cnt = 0;
     view.onFrame = function(event){
         cnt += 1;
-        if(cnt % 50 == 0){
+        if(cnt % 25 == 0){
             p.newone();
         }
         p.move();
     };
 
     paper.view.draw();
-
-
 
 };
 
@@ -215,13 +212,13 @@ function make_legend(counter) {
         var tr = document.createElement("tr");
 
         var tdId = tr.appendChild(document.createElement("td"));
-        tdId.innerHTML = counter[key].id;
+        tdId.innerHTML = counter[key].label;
         tdId.style.backgroundColor = counter[key].color;
         tdId.style.color = "white";
         tdId.style.padding = "10px";
 
         var tdLabel = tr.appendChild(document.createElement("td"));
-        tdLabel.innerHTML = counter[key].label;
+        tdLabel.innerHTML = counter[key].desc;
 
         document.getElementById("legend").appendChild(tr);
     }

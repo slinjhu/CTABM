@@ -1,23 +1,21 @@
 
 <head>
-    <title>Head</title>
+    <title>Adaptive CT</title>
     <script src="lib/paper-full.min.js"></script>
-    <script src="lib/jquery-1.11.3.min.js"></script>
-    <script src="lib/d3-3.5.6.min.js"></script>
     <script src="lib/Chart.min.js"></script>
 
     <script type="text/javascript" src="js/path.js"></script>
     <script type="text/javascript" src="js/chart.js"></script>
-    <link rel="stylesheet" type="text/css" href="main.css">
 
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 
 <body>
 
-<canvas id="graph"></canvas>
-<canvas id="chart"></canvas>
+<canvas id="graph" class="panel" width="600" height="600"></canvas>
+<canvas id="chart" class="panel" width="300" height="300"></canvas>
 
-<div id="control">
+<div id="control" class="panel">
     <table id="legend"></table>
     <hr>
     Sponsor's preference of adaptive clinical trials<br>
