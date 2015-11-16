@@ -1,0 +1,30 @@
+body{
+	font-family: 'Lato', sans-serif;
+	overflow-x:hidden;
+}
+#graph{
+    width: 600px;
+    height: 800px;
+    padding-left:50px;
+    margin-top:-70px;
+
+}
+#right_part{
+	
+}
+.panel{
+	width: 420px;
+	margin-top:20px;
+}
+
+}
+#control{
+    padding: 20px;
+    float: left;
+}
+.slider{
+    width: 300px;
+}
+
+.mytd{
+	padding-left:14px;}

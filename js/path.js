@@ -1,3 +1,5 @@
+var symbol;
+var mypoints;
 
 var Vertex = function(x, y, adj){
     this.x = x;
@@ -9,21 +11,21 @@ var Vertex = function(x, y, adj){
 Vertex.prototype = {
     makePoint: function(x, y){
         x = 110 * (0.2+x);
-        y = 100 * (y-0.5);
+        y = 100 * y;
         return new paper.Point(x, y);
     },
     makeText: function(text){
         var circle = new paper.Path.Circle(this.point, 20);
         circle.fillColor = 'white';
-        circle.strokeColor = 'black';
+        circle.strokeColor = '#bdc3c7';
         var text = new paper.PointText({
             content: text,
             point: this.point,
             justification: "center",
-            fillColor: "red",
-            fontSize: "25px"
+            fillColor: "#FF2742",
+            fontSize: "22px",
         });
-        text.translate(new paper.Point(0, 10));
+        text.translate(new paper.Point(0, 8));
     }
 };
 
@@ -61,8 +63,8 @@ Graph.prototype = {
                 if (! isDiscovered[child]) {
                     var path = new paper.Path({
                         segments: [vertices[id].point, vertices[child].point],
-                        strokeColor: "#888",
-                        strokeWidth: 10
+                        strokeColor: "#bdc3c7",
+                        strokeWidth: 8
                     }).sendToBack();
                     DFSdraw(child);
                 }
@@ -79,21 +81,22 @@ Graph.prototype = {
 
 
 
+
 var Particles = function(graph){
     this.symbol = this.makeSymbol();
     this.graph = graph;
     this.origin = graph.vertices["P"].point;
     this.instances = new Array();
     this.counter = {
-        As: {label: "As", desc: "Accepted, standard", value: 0, color: "DarkGreen"},
-        Ns: {label: "Ns", desc: "Not accepted, standard", value: 0, color: "FireBrick"},
-        Aa: {label: "Aa", desc: "Accepted, adaptive", value: 0, color: "LimeGreen"},
-        Na: {label: "Na", desc: "Not accepted, adaptive", value: 0, color: "Magenta", startAngle: 0}
+        As: {id: "As", label: "Accepted, standard", value: 0, color: "#279CEB"},
+        Ns: {id: "Ns", label: "Not accepted, standard", value: 0, color: "#f35958"},
+        Aa: {id: "Aa", label: "Accepted, adaptive", value: 0, color: "#50E3C2"},
+        Na: {id: "Na", label: "Not accepted, adaptive", value: 0, color: "#f39c12"}
     };
-    make_legend(this.counter);
-    update_chart(this.counter);
-
+    make_legend(this.counter)
+    update_chart([{label: " ", value: 1, color: "#CCC"}] );
 };
+
 
 
 Particles.prototype = {
@@ -177,9 +180,9 @@ Particles.prototype = {
     makeSymbol: function(){
         var point = new paper.Point(0, 0);
         var circle = new paper.Path.Circle(point, 10);
-        circle.fillColor = 'blue';
-        circle.strokeColor = 'black';
-        circle.strokeWidth = 3;
+        circle.fillColor = '#1D85FF';
+        circle.strokeColor = '#2980b9';
+        circle.strokeWidth = 2;
         circle.opacity = 0.7;
         return new paper.Symbol(circle);
     }
@@ -195,13 +198,15 @@ window.onload = function(){
     var cnt = 0;
     view.onFrame = function(event){
         cnt += 1;
-        if(cnt % 25 == 0){
+        if(cnt % 30 == 0){
             p.newone();
         }
         p.move();
     };
 
     paper.view.draw();
+
+
 
 };
 
@@ -212,14 +217,19 @@ function make_legend(counter) {
         var tr = document.createElement("tr");
 
         var tdId = tr.appendChild(document.createElement("td"));
-        tdId.innerHTML = counter[key].label;
+	
+        tdId.innerHTML = counter[key].id;
         tdId.style.backgroundColor = counter[key].color;
         tdId.style.color = "white";
-        tdId.style.padding = "10px";
+        tdId.style.padding = "8px";
+		tdId.style.border = "10px solid #fff";
 
         var tdLabel = tr.appendChild(document.createElement("td"));
-        tdLabel.innerHTML = counter[key].desc;
+		tdLabel.className = "mytd";
+			
+        tdLabel.innerHTML = counter[key].label;
 
         document.getElementById("legend").appendChild(tr);
+		
     }
 }
