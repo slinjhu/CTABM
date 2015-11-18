@@ -91,7 +91,7 @@ var Particles = function(graph){
         As: {id: "As", label: "Accepted, standard", value: 0, color: "#279CEB"},
         Ns: {id: "Ns", label: "Not accepted, standard", value: 0, color: "#f35958"},
         Aa: {id: "Aa", label: "Accepted, adaptive", value: 0, color: "#50E3C2"},
-        Na: {id: "Na", label: "Not accepted, adaptive", value: 0, color: "#f39c12"}
+        Na: {id: "Na", label: "Not accepted, adaptive", value: 0, color: "#f1c40f"}
     };
     make_legend(this.counter)
     update_chart([{label: " ", value: 1, color: "#CCC"}] );
@@ -138,7 +138,7 @@ Particles.prototype = {
                         return "Ns";
                     }
                 case "AD":
-                    var probAccept = document.getElementById("probAcceptAtAdaptive").value;
+                    var probAccept = 10;
                     if(Math.random()*100 < probAccept){
                         return "Aa";
                     }else{
