@@ -11,7 +11,7 @@ var Vertex = function(x, y, adj){
 Vertex.prototype = {
     makePoint: function(x, y){
         x = 110 * (0.2+x);
-        y = 100 * y;
+        y = 80 * y;
         return new paper.Point(x, y);
     },
     makeText: function(text){
@@ -87,14 +87,19 @@ var Particles = function(graph){
     this.graph = graph;
     this.origin = graph.vertices["P"].point;
     this.instances = new Array();
+    this.time = 0;
     this.counter = {
-        As: {id: "As", label: "Accepted, standard", value: 0, color: "#279CEB"},
-        Ns: {id: "Ns", label: "Not accepted, standard", value: 0, color: "#f35958"},
-        Aa: {id: "Aa", label: "Accepted, adaptive", value: 0, color: "#50E3C2"},
-        Na: {id: "Na", label: "Not accepted, adaptive", value: 0, color: "#f1c40f"}
+        As: {id: "As", label: "Accepted, standard", value: 0},
+        Ns: {id: "Ns", label: "Not accepted, standard", value: 0},
+        Aa: {id: "Aa", label: "Accepted, adaptive", value: 0},
+        Na: {id: "Na", label: "Not accepted, adaptive", value: 0}
     };
-    make_legend(this.counter)
-    update_chart([{label: " ", value: 1, color: "#CCC"}] );
+    this.myview = new MyView();
+    this.myview.make_legend(this.counter);
+    this.mycontroller = new Controller();
+
+
+
 };
 
 
@@ -106,6 +111,7 @@ Particles.prototype = {
         placedSymbol.to = "D";
 
         this.instances.push(placedSymbol);
+        this.time += 1;
     },
     move: function(){
         function getFrac(ptFrom, ptTo, ptNow){
@@ -138,7 +144,7 @@ Particles.prototype = {
                         return "Ns";
                     }
                 case "AD":
-                    var probAccept = 10;
+                    var probAccept = document.getElementById("probAcceptAtAdaptive").value;
                     if(Math.random()*100 < probAccept){
                         return "Aa";
                     }else{
@@ -168,7 +174,15 @@ Particles.prototype = {
                     } else { // Reached the end
                         var id = this.instances[i].to;
                         this.counter[id].value += 1;
-                        update_chart(this.counter);
+
+                        if(id === "Aa" || id === "As") {
+                            var x = this.time;
+                            var y = this.counter[id].value;
+                            this.myview.AsAa.addPoint(id, x, y);
+                        }
+                        if(id === "Aa"){
+                            this.mycontroller.addBioMaker();
+                        }
 
                         this.instances[i].visible = false;
                         delete this.instances[i];
@@ -180,8 +194,8 @@ Particles.prototype = {
     makeSymbol: function(){
         var point = new paper.Point(0, 0);
         var circle = new paper.Path.Circle(point, 10);
-        circle.fillColor = '#1D85FF';
-        circle.strokeColor = '#2980b9';
+        circle.fillColor = Para.color.purple;
+        circle.strokeColor = Para.color.blue;
         circle.strokeWidth = 2;
         circle.opacity = 0.7;
         return new paper.Symbol(circle);
@@ -194,6 +208,7 @@ window.onload = function(){
 
     var graph = new Graph();
     var p = new Particles(graph);
+
 
     var cnt = 0;
     view.onFrame = function(event){
@@ -212,24 +227,3 @@ window.onload = function(){
 
 
 
-function make_legend(counter) {
-    for (var key in counter) {
-        var tr = document.createElement("tr");
-
-        var tdId = tr.appendChild(document.createElement("td"));
-	
-        tdId.innerHTML = counter[key].id;
-        tdId.style.backgroundColor = counter[key].color;
-        tdId.style.color = "white";
-        tdId.style.padding = "8px";
-		tdId.style.border = "10px solid #fff";
-
-        var tdLabel = tr.appendChild(document.createElement("td"));
-		tdLabel.className = "mytd";
-			
-        tdLabel.innerHTML = counter[key].label;
-
-        document.getElementById("legend").appendChild(tr);
-		
-    }
-}

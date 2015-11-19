@@ -9,8 +9,12 @@
   <script src="lib/jquery-1.11.3.min.js"></script>
   <script src="lib/d3-3.5.6.min.js"></script>
   <script src="lib/Chart.min.js"></script>
-  <script type="text/javascript" src="js/path.js"></script>
-  <script type="text/javascript" src="js/chart.js"></script>
+  <script src="lib/Chart.Scatter.min.js"></script>
+  <script type="text/javascript" src="js/settings.js"></script>
+  <script type="text/javascript" src="js/view.js"></script>
+  <script type="text/javascript" src="js/controller.js"></script>
+  <script type="text/javascript" src="js/model.js"></script>
+
 </head>
 
 <body>
@@ -21,23 +25,40 @@
 </nav>
 
 <div class="row">
-  <div class="col-md-7"><canvas id="graph"></canvas></div>
+  <div class="col-md-7">
+    <canvas id="graph" width="700" height="500"></canvas> <br>
+    <canvas id="AsAa" width="300" height="200"></canvas>
+    <table id="legend"></table>
+    <canvas id="distribution" width="150" height="150"></canvas>
+
+
+
+  </div>
+
   <div class="col-md-5" id="right_part">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Control Panel</h3>
       </div>
       <div class="panel-body">
-        <canvas id="chart" width="300" height="300"></canvas>
+
         <div id="control">
-          <table id="legend" style="border-spacing: 15px;">
-          </table>
+
           <hr>
-          <p>Sponsor's preference of adaptive clinical trials</p>
-          <input id="probAdaptive" type="range" class="slider" min =1 max=100 value=15>
+          <p>Sponsor's preference of adaptive clinical trials:
+            <span id="valueProbAdaptive">15</span>
+          </p>
+          <input id="probAdaptive" type="range" min =1 max=100 value=15
+                 onchange="document.getElementById('valueProbAdaptive').innerHTML = this.value;">
           <hr>
-          <p>Rate of probability increase due to Biomarkers.</p>
-          <input id="probAcceptAtAdaptive" type="range" class="slider" min =1 max=100 value=25>
+          <p>Rate of probability increase due to Biomarkers.
+            <span id="valueEffectOfBioMaker">5</span>
+          </p>
+          <input id="effectOfBioMaker" type="range" min =1 max=10 value=5
+                 onchange="document.getElementById('valueEffectOfBioMaker').innerHTML = this.value;">
+          <hr>
+          <p>Chance of acceptance with adaptive CT: <span id="valueProbAcceptAtAdaptive">5</span></p>
+          <progress id="probAcceptAtAdaptive" max="100" value="5"> </progress>
         </div>
       </div>
     </div>
