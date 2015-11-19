@@ -5,14 +5,20 @@ function update_chart(counter) {
 }
 
 var Distribution = function(canvasId){
-    var ctx = document.getElementById(canvasId).getContext("2d");
-    var options = {
+    this.ctx = document.getElementById(canvasId).getContext("2d");
+    this.options = {
         animation : false,
         tooltipEvents: []
-    }
+    };
     var data = [{value: 0, color: "gray"}];
-    this.chart = new Chart(ctx).Doughnut(data, options);
     console.log("Created distribution chart");
+};
+
+Distribution.prototype = {
+    draw: function(data){
+        this.chart = new Chart(this.ctx).Doughnut(data, this.options);
+        console.log(data.As.value + " | " + data.Ns.value);
+    }
 };
 
 var CurvePlot = function(canvasId){
@@ -92,5 +98,9 @@ MyView.prototype = {
             document.getElementById("legend").appendChild(tr);
 
         }
+    },
+    make_mini_legend: function(counter){
+        var miniCounter = {Aa: counter.Aa, As: counter.As};
+        this.make_legend(miniCounter);
     }
 };

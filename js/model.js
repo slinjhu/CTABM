@@ -89,16 +89,15 @@ var Particles = function(graph){
     this.instances = new Array();
     this.time = 0;
     this.counter = {
-        As: {id: "As", label: "Accepted, standard", value: 0},
-        Ns: {id: "Ns", label: "Not accepted, standard", value: 0},
-        Aa: {id: "Aa", label: "Accepted, adaptive", value: 0},
-        Na: {id: "Na", label: "Not accepted, adaptive", value: 0}
+        As: {id: "As", label: "Acceptable, standard", value: 0, color: Para.color.As},
+        Ns: {id: "Ns", label: "Not acceptable, standard", value: 0, color: Para.color.Ns},
+        Aa: {id: "Aa", label: "Acceptable, adaptive", value: 0, color: Para.color.Aa},
+        Na: {id: "Na", label: "Not acceptable, adaptive", value: 0, color: Para.color.Na}
     };
     this.myview = new MyView();
     this.myview.make_legend(this.counter);
     this.mycontroller = new Controller();
-
-
+    this.mydistribution = new Distribution("distribution");
 
 };
 
@@ -125,7 +124,7 @@ Particles.prototype = {
             var dx = ptTo.x - ptFrom.x;
             var dy = ptTo.y - ptFrom.y;
             var dis = Math.sqrt(dx*dx + dy*dy);
-            return new paper.Point(dx / dis, dy / dis);
+            return new paper.Point(3*dx / dis, 3*dy / dis);
         }
         function getDest(thisVertex, adj){
             switch (thisVertex){
@@ -137,14 +136,16 @@ Particles.prototype = {
                         return "ST";
                     }
                 case "ST":
-                    var probAccept = 10;
+                    var probAccept = 20;
                     if(Math.random()*100 < probAccept){
                         return "As";
                     }else{
                         return "Ns";
                     }
                 case "AD":
-                    var probAccept = document.getElementById("probAcceptAtAdaptive").value;
+                    var numMarker = document.getElementById("numBioMarker").value;
+                    var rate = document.getElementById("effectOfBioMaker").value;
+                    var probAccept = 5 + numMarker * rate;
                     if(Math.random()*100 < probAccept){
                         return "Aa";
                     }else{
@@ -174,6 +175,7 @@ Particles.prototype = {
                     } else { // Reached the end
                         var id = this.instances[i].to;
                         this.counter[id].value += 1;
+                        this.mydistribution.draw(this.counter);
 
                         if(id === "Aa" || id === "As") {
                             var x = this.time;
