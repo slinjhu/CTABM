@@ -44,14 +44,14 @@
       </div>
       <div class="panel-body">
 
-        <div id="control" ng-app="">
+        <div id="control" ng-app="" ng-init="probAdaptive=50; effectOfBioMaker=1">
 
           <hr>
           <p>Sponsor's preference of adaptive clinical trials: {{probAdaptive}} </p>
-          <input id="probAdaptive" type="range" min =1 max=100 value=50 ng-model="probAdaptive">
+          <input id="probAdaptive" type="range" min=1 max=100 ng-model="probAdaptive">
           <hr>
           <p>Rate of probability increase due to Biomarkers: {{effectOfBioMaker}}</p>
-          <input id="effectOfBioMaker" type="range" min =0 max=4 value=1 step="0.1" ng-model="effectOfBioMaker">
+          <input id="effectOfBioMaker" type="range" min=0.2 max=4 step="0.2" ng-model="effectOfBioMaker">
           <hr>
           <p>Number of biomarkers: <span id="valueNumBioMarker">0</span></p>
           <progress id="numBioMarker" max="10" value="0"> </progress>

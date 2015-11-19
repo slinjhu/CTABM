@@ -17,7 +17,7 @@ var Distribution = function(canvasId){
 Distribution.prototype = {
     draw: function(data){
         this.chart = new Chart(this.ctx).Doughnut(data, this.options);
-        console.log(data.As.value + " | " + data.Ns.value);
+
     }
 };
 
