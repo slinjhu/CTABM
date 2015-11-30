@@ -11,7 +11,7 @@ var Vertex = function(x, y, adj){
 Vertex.prototype = {
     makePoint: function(x, y){
         x = 110 * (0.2+x);
-        y = 80 * y;
+        y = 80 * (y-0.6);
         return new paper.Point(x, y);
     },
     makeText: function(text){

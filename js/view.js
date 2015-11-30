@@ -87,12 +87,12 @@ MyView.prototype = {
             tdId.innerHTML = counter[key].id;
             tdId.style.backgroundColor = Para.color[key];
             tdId.style.color = "white";
-            tdId.style.padding = "3px";
-            tdId.style.border = "5px solid #fff";
+            tdId.style.padding = "5px";
+            tdId.style.border = "10px solid #fff";
+
 
             var tdLabel = tr.appendChild(document.createElement("td"));
-            tdLabel.className = "mytd";
-
+            tdLabel.style.paddingLeft = "10px";
             tdLabel.innerHTML = counter[key].label;
 
             document.getElementById("legend").appendChild(tr);
