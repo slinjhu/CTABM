@@ -1,10 +1,12 @@
 body{
-	font-family: 'Lato', sans-serif;
+    font-family: 'Lato', sans-serif;
     padding: 10px;
 }
 
 
-
+.row{
+    padding-left: 20px;
+}
 
 
 progress{
